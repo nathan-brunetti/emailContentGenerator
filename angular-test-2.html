@@ -152,24 +152,6 @@ label {
    </tr>
   </table>
  </div>
- <br><br>
- <div class="emailContainer">
-  <button onclick="selectText('eipsum')">Select Email Code</button>
- </div>
- <div id="eipsum" class="emailContainer" style="max-width:600px; overflow:hidden;">
-  <pre>
-   &lt;!DOCTYPE html&gt;
-   &lt;html lang="en"&gt;
-   &lt;head&gt;
-   &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
-   &lt;meta name="viewport" content="width=device-width"&gt;
-   &lt;/head&gt;
-   &lt;body&gt;
-   &lt;p style="font-size:24px; line-height:1.2em; font-family: Arial, Helvetica, sans-serif; color:#005775; font-weight:bold;"&gt;{{headline}}&lt;/p&gt;
-   &lt;/body&gt;
-   &lt;/html&gt;
-  </pre>
- </div>
 </div>
 
 <script>
@@ -178,18 +160,6 @@ app.controller('myCtrl', function($scope) {
 				$scope.sl = "",
 				$scope.pv = ""
 });
-
-function selectText(eipsum) {
-  if (document.selection) {
-    var range = document.body.createTextRange();
-    range.moveToElementText(document.getElementById(eipsum));
-    range.select();
-  } else if (window.getSelection) {
-    var range = document.createRange();
-    range.selectNode(document.getElementById(eipsum));
-    window.getSelection().addRange(range);
-  }
-}
 </script>
 
 </body>
