@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style type="text/css">
+body {
+ height:100vh; /* This is needed to overcome a Chrome bug. */
+ width:100vw;  /* As above. */
+}
+h4 {
+	color:#0093B9;
+}
+pre {
+ max-height:100px;
+ white-space:pre-wrap;
+}
+label {
+	padding:4px 0px 0px 0px;
+	font-weight:normal;
+}
+.colLeft {
+ float: left;
+ width: 30%;
+ padding: 10px 20px 20px 20px;
+	/*max-width:550px;*/
+	background-color:#F5F5F5;
+	/*height:100vh;*/
+ /*max-width:550px;*/
+}
+.colRight {
+ float: right;
+ width: 70%;
+ padding: 30px 0px 10px 0px;
+}
+.emailContainer {
+ max-width: 600px;
+ align: center;
+ margin: 0 auto;
+}
+.input {
+ width: 100%;
+	padding:0px 0px 0px 10px;
+}
+.good {
+ background:#2ecc71;
+ padding:2px 10px;
+ color:#fffffe;
+ border-radius:3px;
+}
+.warning {
+ background:#f39c12;
+ padding:2px 10px;
+ color:#fffffe;
+ border-radius:3px;
+}
+.bad {
+ background:#e74c3c;
+ padding:2px 10px;
+ color:#fffffe;
+ border-radius:3px;
+}
+
+@media all and (max-width: 1000px) {
+.emailContainer {
+ width: 100%;
+}
+.colLeft {
+ width: 100%;
+ float: left;
+}
+.colRight {
+ width: 100%;
+ float: left;
+}
+.img-scale {
+ width: 100%;
+}
+}
+</style>
+</head>
+<body ng-app="R2D2" ng-controller="myCtrl" style="padding:0px 0px 30px 0px;">
+
+<div class="colLeft">
+ <h4>1. Email Details:</h4>
+ <input class="form-control input-sm" type="text" ng-model="segment" placeholder="Segment Name Here" value="80 Characters - Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean">
+ <label>Subject Line <span ng-class="{'good':sl.length <= 40, 'warning':sl.length > 40, 'bad':sl.length > 60}">{{sl.length}}</span></label>
+ <input class="form-control input-sm" type="text" ng-model="sl" placeholder="Subject Line Here" value="80 Characters - Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean">
+ <label>Preview Text <span ng-class="{'good':pv.length <= 50, 'warning':pv.length > 50, 'bad':pv.length > 80}">{{pv.length}}</span></label>
+ <input class="form-control input-sm" type="text" ng-model="pv" placeholder="Preview Text Here" value="80 Characters - Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean">
+ 
+ <h4>2. Pick your template:</h4>
+ <input id="first" type="radio" name="content" ng-model="content" value="first" title="1"> Template #1 - Long copy version<br>
+ <input id="second" type="radio" name="content" ng-model="content" value="second" title="2"> Template #2 - Short copy version<br>
+ <input id="third" type="radio" name="content" ng-model="content" value="third"> Template #3 - Short copy version with added content<br>
+
+ <div>
+  <h4 ng-show="content == 'first' || content == 'second' || content == 'third'">3. Fill in your content:</h4>
+  <label ng-show="content == 'first' || content == 'second' || content == 'third'">Headline <span ng-class="{'bad':headline.length > 70}">{{80-headline.length}}</span></label>
+  <textarea class="form-control input-sm" ng-show="content == 'first' || content == 'second' || content == 'third'" ng-model="headline" placeholder="Type your headline here..." maxlength="80" rows="2"></textarea>
+   <label ng-show="content == 'first' || content == 'second' || content == 'third'">Sub-headline <span ng-class="{'bad':subHeadline.length > 50}">{{60-subHeadline.length}}</span></label>
+  <textarea class="form-control input-sm" ng-show="content == 'first' || content == 'second' || content == 'third'" ng-model="subHeadline" placeholder="Type your sub-headline here..." maxlength="60" rows="2"></textarea>
+   <label ng-show="content == 'first'">Body Copy <span ng-class="{'bad':body.length > 370}">{{800-body.length}}</span></label>
+  <textarea class="form-control input-sm" id="textarea" ng-show="content == 'first'" ng-model="body" placeholder="Type your body copy here..." maxlength="800" rows="10"></textarea>
+   <label ng-show="content == 'second' || content == 'third'">Body Copy <span ng-class="{'bad':body2.length > 150}">{{180-body2.length}}</span></label>
+  <textarea class="form-control input-sm" ng-show="content == 'second' || content == 'third'" ng-model="body2" placeholder="Type your body copy here..." maxlength="180" rows="10"></textarea><br>
+   <input class="form-control input-sm" ng-show="content == 'third'" type="text" ng-model="image" placeholder="Put URL Here for circle image - needs to be 150x150"><br>
+   <input class="form-control input-sm" ng-show="content == 'third'" type="text" ng-model="addedContent" placeholder="addedContent" maxlength="80"><br>
+   <input class="form-control input-sm" ng-show="content == 'third'" type="text" ng-model="addedContentCTA" placeholder="addedContentCTA" maxlength="25"><br>
+   <input class="form-control input-sm" ng-show="content == 'first' || content == 'second' || content == 'third'" type="text" ng-model="cta" placeholder="CTA Here"><br>
+ </div>
+</div>
+
+<div class="colRight">
+ <div class="emailContainer">
+ 	<p style="text-align:center;">{{segment}}<br>
+  {{sl}}<br>{{pv}}</p>
+  <img class="img-scale" src="https://storage.googleapis.com/dcpa-email-images/600x225-secret-garden.jpg" alt="test" style="border:0px; width:100%;" />
+  <br><br>
+  <p style="font-size:24px; line-height:1.2em; font-family: Arial, Helvetica, sans-serif; color:#005775; font-weight:bold;">{{headline}}</p>
+  <p style="font-size:20px; line-height:1.2em; font-family: Arial, Helvetica, sans-serif; color:#47B9C7; font-weight:bold;">{{subHeadline}}</p>
+  <p style="font-size:16px; font-weight:normal; line-height:1.2em; font-family:Arial, Helvetica, sans-serif; color:#747474; padding:10px 0px 0px 0px; white-space: pre-wrap;">{{body}}{{body2}}</p>
+  <tr>
+   <td style="padding:10px 0px;">
+    <hr style="border:1px solid #EBEBEB;" />
+   </td>
+  </tr>
+  <tr>
+   <td>
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+     <tr>
+      <td style="font-size:16px; font-weight:normal; line-height:1.2em; font-family:Arial, Helvetica, sans-serif; color:#747474; padding:20px;" class="twocolumn"> <a href=""><img src="{{image}}" alt="" style="border:0px; display:block;" /></a> </td>
+      <td style="font-size:16px; font-weight:normal; line-height:1.2em; font-family:Arial, Helvetica, sans-serif; color:#747474; padding:10px 0px 10px 0px;" class="twocolumn">{{addedContent}}<br />
+       <a style="color:#79C79A; text-decoration:none; font-weight:bold; text-transform:uppercase;" href="https://www.denvercenter.org/shows/specific-series/Get?Id=1a5daf1a-9c4b-4422-8efa-4bc19623e03a&utm_source=yesmail&utm_medium=email&utm_campaign=mamma-mia-`__MMID__`">{{addedContentCTA}}&#x25b8;</a> </td>
+     </tr>
+    </table>
+   </td>
+  </tr>
+  <br>
+  <br>
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+   <tr>
+    <td>
+     <table cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tr>
+       <td style="background-color:#0093B9; color:#FFFFFF; text-align:center; font-size:16px; line-height:1.2em; padding:10px; font-weight:400; cursor:pointer; font-family:Arial, Helvetica, sans-serif; text-transform:uppercase;"> <a style="color:#FFFFFF; text-decoration:none; cursor:pointer;" href="">{{cta}}</a> </td>
+      </tr>
+     </table>
+    </td>
+   </tr>
+  </table>
+ </div>
+ <br><br>
+ <div class="emailContainer">
+  <button onclick="selectText('eipsum')">Select Email Code</button>
+ </div>
+ <div id="eipsum" class="emailContainer" style="max-width:600px; overflow:hidden;">
+  <pre>
+   &lt;!DOCTYPE html&gt;
+   &lt;html lang="en"&gt;
+   &lt;head&gt;
+   &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+   &lt;meta name="viewport" content="width=device-width"&gt;
+   &lt;/head&gt;
+   &lt;body&gt;
+   &lt;p style="font-size:24px; line-height:1.2em; font-family: Arial, Helvetica, sans-serif; color:#005775; font-weight:bold;"&gt;{{headline}}&lt;/p&gt;
+   &lt;/body&gt;
+   &lt;/html&gt;
+  </pre>
+ </div>
+</div>
+
+<script>
+var app = angular.module('R2D2', []);
+app.controller('myCtrl', function($scope) {
+				$scope.sl = "",
+				$scope.pv = ""
+});
+
+function selectText(eipsum) {
+  if (document.selection) {
+    var range = document.body.createTextRange();
+    range.moveToElementText(document.getElementById(eipsum));
+    range.select();
+  } else if (window.getSelection) {
+    var range = document.createRange();
+    range.selectNode(document.getElementById(eipsum));
+    window.getSelection().addRange(range);
+  }
+}
+</script>
+
+</body>
+</html>
